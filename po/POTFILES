@@ -1,0 +1,10 @@
+src/Application.vala
+src/MainWindow.vala
+src/Scanner.vala
+src/Cleaner.vala
+src/CleaningTarget.vala
+src/FileUtils.vala
+src/Preferences.vala
+src/Stats.vala
+data/io.github.alessandro_mattos.Purrify.desktop.in
+data/io.github.alessandro_mattos.Purrify.metainfo.xml.in

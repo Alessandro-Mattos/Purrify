@@ -1,0 +1,503 @@
+# French translations for Purrify.
+# This file is distributed under the same license as the Purrify package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Purrify 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-02 18:01-0300\n"
+"PO-Revision-Date: 2026-07-02 01:15-0300\n"
+"Last-Translator: Purrify contributors\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: src/MainWindow.vala:79
+msgid "A calm, safe cleaner"
+msgstr "Un nettoyeur calme et sûr"
+
+#: src/MainWindow.vala:89
+msgid "🐾 Feed the Cat"
+msgstr ""
+
+#: src/MainWindow.vala:90
+msgid "Support Purrify"
+msgstr ""
+
+#: src/MainWindow.vala:95
+msgid "Scan"
+msgstr "Analyser"
+
+#: src/MainWindow.vala:99
+msgid "Clean Selected"
+msgstr "Nettoyer la sélection"
+
+#: src/MainWindow.vala:116
+msgid "Ready"
+msgstr "Prêt"
+
+#: src/MainWindow.vala:123
+msgid "Click Scan to look for safe things to clean."
+msgstr "Cliquez sur Analyser pour rechercher des éléments sûrs à nettoyer."
+
+#: src/MainWindow.vala:176
+msgid "Scan options"
+msgstr "Options d’analyse"
+
+#: src/MainWindow.vala:184
+msgid "Caches & Trash"
+msgstr "Caches et corbeille"
+
+#: src/MainWindow.vala:192
+msgid "Flatpak"
+msgstr "Flatpak"
+
+#: src/MainWindow.vala:200
+msgid "Downloads"
+msgstr "Téléchargements"
+
+#: src/MainWindow.vala:209
+msgid "Duplicate review (slower)"
+msgstr "Recherche de doublons (plus lente)"
+
+#: src/MainWindow.vala:218
+msgid "Developer tools"
+msgstr "Outils de développement"
+
+#: src/MainWindow.vala:228
+msgid ""
+"Downloads and duplicate review can take longer on large folders. Your scan "
+"choices are remembered locally."
+msgstr ""
+"Les téléchargements et la recherche de doublons peuvent prendre plus de "
+"temps dans les grands dossiers. Vos choix d’analyse sont mémorisés "
+"localement."
+
+#: src/MainWindow.vala:260
+msgid "Looking for safe things to clean…"
+msgstr "Recherche d'éléments sûrs à nettoyer…"
+
+#: src/MainWindow.vala:329
+msgid "All clean"
+msgstr "Tout est propre"
+
+#: src/MainWindow.vala:330
+msgid "Nothing safe to clean was found with the current scan options."
+msgstr ""
+"Aucun élément sûr à nettoyer n’a été trouvé avec les options d’analyse "
+"actuelles."
+
+#: src/MainWindow.vala:331
+msgid ""
+"Try enabling Downloads, duplicate review, or Developer tools if you want a "
+"broader review."
+msgstr ""
+"Activez Téléchargements, recherche de doublons ou Outils de développement "
+"pour une analyse plus large."
+
+#: src/MainWindow.vala:487
+#, c-format
+msgid "%d item found. Expand to choose individually."
+msgid_plural "%d items found. Expand to choose individually."
+msgstr[0] "%d élément trouvé. développez pour choisir individuellement."
+msgstr[1] "%d éléments trouvés. développez pour choisir individuellement."
+
+#: src/MainWindow.vala:631
+msgid "Nothing selected yet. Everything found is listed below."
+msgstr ""
+"Rien n'est encore sélectionné. Tout ce qui a été trouvé est listé ci-dessous."
+
+#: src/MainWindow.vala:635
+#, c-format
+msgid "%d item selected. Nothing is removed until you confirm."
+msgid_plural "%d items selected. Nothing is removed until you confirm."
+msgstr[0] ""
+"%d élément sélectionné. rien n'est supprimé avant votre confirmation."
+msgstr[1] ""
+"%d éléments sélectionnés. rien n'est supprimé avant votre confirmation."
+
+#: src/MainWindow.vala:660
+msgid "Select at least one item to clean."
+msgstr "Sélectionnez au moins un élément à nettoyer."
+
+#: src/MainWindow.vala:680
+#, c-format
+msgid ""
+"This will permanently remove about %s and run %d command on your system. "
+"This cannot be undone."
+msgid_plural ""
+"This will permanently remove about %s and run %d commands on your system. "
+"This cannot be undone."
+msgstr[0] ""
+"Cela supprimera définitivement environ %s et exécutera %d commande sur votre "
+"système. Cette action est irréversible."
+msgstr[1] ""
+"Cela supprimera définitivement environ %s et exécutera %d commandes sur "
+"votre système. Cette action est irréversible."
+
+#: src/MainWindow.vala:686
+#, c-format
+msgid "This will permanently remove about %s. This cannot be undone."
+msgstr ""
+"Cela supprimera définitivement environ %s. Cette action est irréversible."
+
+#: src/MainWindow.vala:693
+#, c-format
+msgid "Delete %d item?"
+msgid_plural "Delete %d items?"
+msgstr[0] "Supprimer %d élément ?"
+msgstr[1] "Supprimer %d éléments ?"
+
+#: src/MainWindow.vala:704
+msgid "Cancel"
+msgstr "Annuler"
+
+#: src/MainWindow.vala:705
+msgid "Delete"
+msgstr "Supprimer"
+
+#: src/MainWindow.vala:737
+#, c-format
+msgid "%s (%d item)"
+msgid_plural "%s (%d items)"
+msgstr[0] "%s (%d élément)"
+msgstr[1] "%s (%d éléments)"
+
+#: src/MainWindow.vala:749
+#, c-format
+msgid "%d more category"
+msgid_plural "%d more categories"
+msgstr[0] "%d catégorie de plus"
+msgstr[1] "%d catégories de plus"
+
+#: src/MainWindow.vala:755
+#, c-format
+msgid "Included: %s"
+msgstr "Inclus : %s"
+
+#: src/MainWindow.vala:763
+msgid "Cleaning selected items…"
+msgstr "Nettoyage des éléments sélectionnés…"
+
+#: src/MainWindow.vala:787 src/Cleaner.vala:35 src/Cleaner.vala:45
+#, c-format
+msgid "%s: %s"
+msgstr "%s : %s"
+
+#: src/MainWindow.vala:788
+#, c-format
+msgid "Failed to run %s: %s\n"
+msgstr "Échec de l'exécution de %s : %s\n"
+
+#: src/MainWindow.vala:814
+#, c-format
+msgid "Before: about %s selected. After: %s freed."
+msgstr "Avant : environ %s sélectionnés. Après : %s libérés."
+
+#: src/MainWindow.vala:818
+msgid "Nothing was removed."
+msgstr "Rien n'a été supprimé."
+
+#: src/MainWindow.vala:822
+#, c-format
+msgid "%d item could not be removed."
+msgid_plural "%d items could not be removed."
+msgstr[0] "%d élément n'a pas pu être supprimé."
+msgstr[1] "%d éléments n'ont pas pu être supprimés."
+
+#: src/MainWindow.vala:830
+#, c-format
+msgid "%d item cleaned"
+msgid_plural "%d items cleaned"
+msgstr[0] "%d élément nettoyé"
+msgstr[1] "%d éléments nettoyés"
+
+#: src/MainWindow.vala:837
+#, c-format
+msgid "%d command completed"
+msgid_plural "%d commands completed"
+msgstr[0] "%d commande terminée"
+msgstr[1] "%d commandes terminées"
+
+#: src/MainWindow.vala:843
+#, c-format
+msgid ""
+"%s. %s freed in total since you installed Purrify.%s If it saved you some "
+"hassle, a good rating helps a lot."
+msgstr ""
+"%s. %s libérés au total depuis l'installation de Purrify.%s Si cela vous a "
+"simplifié la vie, une bonne note aide beaucoup."
+
+#: src/MainWindow.vala:849
+#, c-format
+msgid "Nothing to report.%s"
+msgstr "Rien à signaler.%s"
+
+#: src/MainWindow.vala:866
+msgid "Could not remove: "
+msgstr "Impossible de supprimer : "
+
+#: src/MainWindow.vala:881
+#, c-format
+msgid "%d more failure"
+msgid_plural "%d more failures"
+msgstr[0] "%d échec de plus"
+msgstr[1] "%d échecs de plus"
+
+#: src/MainWindow.vala:894
+msgid "No cleanup history yet."
+msgstr "Aucun historique de nettoyage pour le moment."
+
+#: src/MainWindow.vala:898
+msgid "Recent cleanups: "
+msgstr "Nettoyages récents : "
+
+#: src/MainWindow.vala:902
+#, c-format
+msgid "%s freed on %s"
+msgstr "%s libérés le %s"
+
+#: src/MainWindow.vala:909
+#, c-format
+msgid "(%d failure)"
+msgid_plural "(%d failures)"
+msgstr[0] "(%d échec)"
+msgstr[1] "(%d échecs)"
+
+#: src/Scanner.vala:24
+msgid "Thumbnails cache"
+msgstr "Cache des miniatures"
+
+#: src/Scanner.vala:25
+msgid "Cached image previews generated by file managers and apps."
+msgstr ""
+"Aperçus d'images en cache générés par les gestionnaires de fichiers et les "
+"applications."
+
+#: src/Scanner.vala:35
+msgid "Trash files"
+msgstr "Fichiers de la corbeille"
+
+#: src/Scanner.vala:36
+msgid "Files currently stored in your local Trash folder."
+msgstr "Fichiers actuellement stockés dans votre dossier local de corbeille."
+
+#: src/Scanner.vala:46
+msgid "Trash metadata"
+msgstr "Métadonnées de la corbeille"
+
+#: src/Scanner.vala:47
+msgid "Metadata used by the local Trash folder."
+msgstr "Métadonnées utilisées par le dossier local de corbeille."
+
+#: src/Scanner.vala:64
+msgid "Unused Flatpak runtimes"
+msgstr "Environnements Flatpak inutilisés"
+
+#: src/Scanner.vala:65
+msgid ""
+"Runtimes no installed app uses anymore. Safe to remove. Flatpak will "
+"download them again if a future app needs them."
+msgstr ""
+"Environnements qu'aucune application installée n'utilise plus. Suppression "
+"sûre. Flatpak les téléchargera à nouveau si une future application en a "
+"besoin."
+
+#: src/Scanner.vala:118
+msgid "Python package cache (pip)"
+msgstr "Cache de paquets Python (pip)"
+
+#: src/Scanner.vala:119
+msgid ""
+"Downloaded Python packages pip already installed. pip re-downloads them if "
+"needed again."
+msgstr ""
+"Paquets Python téléchargés que pip a déjà installés. pip les téléchargera à "
+"nouveau si nécessaire."
+
+#: src/Scanner.vala:124 src/Scanner.vala:136 src/Scanner.vala:148
+msgid "Developer tool caches"
+msgstr "Caches des outils de développement"
+
+#: src/Scanner.vala:130
+msgid "Node package cache (npm)"
+msgstr "Cache de paquets Node (npm)"
+
+#: src/Scanner.vala:131
+msgid ""
+"Downloaded Node.js packages npm already installed. npm re-downloads them if "
+"needed again."
+msgstr ""
+"Paquets Node.js téléchargés que npm a déjà installés. npm les téléchargera à "
+"nouveau si nécessaire."
+
+#: src/Scanner.vala:142
+msgid "Node package cache (Yarn)"
+msgstr "Cache de paquets Node (Yarn)"
+
+#: src/Scanner.vala:143
+msgid ""
+"Downloaded Node.js packages Yarn already installed. Yarn re-downloads them "
+"if needed again."
+msgstr ""
+"Paquets Node.js téléchargés que Yarn a déjà installés. Yarn les téléchargera "
+"à nouveau si nécessaire."
+
+#: src/Scanner.vala:187
+#, c-format
+msgid "Crash reports: %s"
+msgstr "Rapports de plantage : %s"
+
+#: src/Scanner.vala:188
+msgid ""
+"Diagnostic crash dumps left behind by an app. Safe to remove; only useful "
+"for debugging that app."
+msgstr ""
+"Vidages de diagnostic laissés par une application. Suppression sûre ; utiles "
+"seulement pour déboguer cette application."
+
+#: src/Scanner.vala:194
+msgid "Crash reports"
+msgstr "Rapports de plantage"
+
+#: src/Scanner.vala:227
+#, c-format
+msgid "App cache: %s"
+msgstr "Cache de l'application : %s"
+
+#: src/Scanner.vala:228
+msgid ""
+"Cache used by an app you still have installed. The app recreates it as "
+"needed."
+msgstr ""
+"Cache utilisé par une application encore installée. L'application le recrée "
+"si nécessaire."
+
+#: src/Scanner.vala:234
+msgid "Flatpak app caches"
+msgstr "Caches des applications Flatpak"
+
+#: src/Scanner.vala:279
+#, c-format
+msgid "Flatpak leftover: %s"
+msgstr "Reste Flatpak : %s"
+
+#: src/Scanner.vala:280
+msgid ""
+"Data left behind by an app that does not appear in the installed Flatpak app "
+"list."
+msgstr ""
+"Données laissées par une application qui n'apparaît pas dans la liste des "
+"applications Flatpak installées."
+
+#: src/Scanner.vala:286
+msgid "Flatpak leftovers"
+msgstr "Restes Flatpak"
+
+#: src/Scanner.vala:415
+#, c-format
+msgid "Duplicate: %s"
+msgstr "Doublon : %s"
+
+#: src/Scanner.vala:416
+#, c-format
+msgid ""
+"Identical to %s, already in Downloads. This check can be slow on large "
+"folders, so duplicates are left unselected for review."
+msgstr ""
+"Identique à %s, déjà dans Téléchargements. Cette vérification peut être "
+"lente dans les grands dossiers, donc les doublons restent désélectionnés "
+"pour examen."
+
+#: src/Scanner.vala:422
+msgid "Duplicate files"
+msgstr "Fichiers en double"
+
+#: src/Scanner.vala:587
+#, c-format
+msgid "Empty folder: %s"
+msgstr "Dossier vide : %s"
+
+#: src/Scanner.vala:588
+msgid "Leftover empty folder, likely from an extracted or moved download."
+msgstr ""
+"Dossier vide restant, probablement issu d'un téléchargement extrait ou "
+"déplacé."
+
+#: src/Scanner.vala:595
+msgid "Empty folders"
+msgstr "Dossiers vides"
+
+#: src/Scanner.vala:649
+#, c-format
+msgid "Broken shortcut: %s"
+msgstr "Raccourci cassé : %s"
+
+#: src/Scanner.vala:650
+msgid "A shortcut pointing to a file or folder that no longer exists."
+msgstr "Un raccourci pointant vers un fichier ou dossier qui n'existe plus."
+
+#: src/Scanner.vala:657
+msgid "Broken shortcuts"
+msgstr "Raccourcis cassés"
+
+#: src/Cleaner.vala:57
+msgid "Empty paths cannot be removed."
+msgstr "Les chemins vides ne peuvent pas être supprimés."
+
+#: src/Cleaner.vala:65
+msgid "Refusing to remove a broad system or home path."
+msgstr "Refus de supprimer un chemin système ou personnel trop large."
+
+#: src/Cleaner.vala:100
+msgid "Path is outside Purrify's allowed cleanup locations."
+msgstr ""
+"Le chemin est en dehors des emplacements de nettoyage autorisés par Purrify."
+
+#: src/Cleaner.vala:148
+msgid "Command is not in Purrify's allowed command list."
+msgstr ""
+"La commande ne figure pas dans la liste des commandes autorisées par Purrify."
+
+#: src/Cleaner.vala:175
+msgid "The command exited with an error."
+msgstr "La commande s'est terminée avec une erreur."
+
+#: data/io.github.alessandro_mattos.Purrify.desktop.in:3
+#: data/io.github.alessandro_mattos.Purrify.metainfo.xml.in:4
+msgid "Purrify"
+msgstr ""
+
+#: data/io.github.alessandro_mattos.Purrify.desktop.in:4
+#: data/io.github.alessandro_mattos.Purrify.metainfo.xml.in:5
+msgid "Keep your desktop fresh and tidy"
+msgstr ""
+
+#: data/io.github.alessandro_mattos.Purrify.desktop.in:10
+msgid "cleaner;flatpak;cache;trash;disk;space;elementary;"
+msgstr ""
+
+#: data/io.github.alessandro_mattos.Purrify.metainfo.xml.in:8
+msgid "Alessandro Mattos"
+msgstr ""
+
+#: data/io.github.alessandro_mattos.Purrify.metainfo.xml.in:10
+msgid ""
+"Purrify is a small, careful cleaner for elementary OS. It helps you review "
+"and remove unused files, Flatpak leftovers, thumbnails, and Trash with a "
+"light touch. Nothing is deleted without your approval."
+msgstr ""
+
+#: data/io.github.alessandro_mattos.Purrify.metainfo.xml.in:13
+msgid ""
+"It stays local, avoids telemetry, and uses regular GTK APIs so it works on "
+"Wayland with an X11 fallback."
+msgstr ""
+
+#: data/io.github.alessandro_mattos.Purrify.metainfo.xml.in:25
+msgid ""
+"Initial release with user-space cache, Trash and Flatpak leftover scanning."
+msgstr ""
