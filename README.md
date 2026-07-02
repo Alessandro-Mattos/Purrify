@@ -1,118 +1,57 @@
 # Purrify
 
-![Purrify logo](Styles/FullLogo.png)
+![Purrify logo](FullLogo.png)
 
-**Purrify: yes, that kitten cleaner.**
+**Yes, the kitten cleaner.**
 
-Keep your desktop fresh and tidy with a small, careful cleaner for elementary OS. Purrify reviews common user-space clutter, shows what can be removed, and waits for your confirmation before touching anything.
+Purrify is a beautiful cleanup app for elementary OS. It helps you to keep your desktop clean and tidy , removing thumbnail caches, Trash, Flatpak leftovers, duplicate downloads, empty folders, and a few developer caches.
 
-Purrify is written in **Vala**, **GTK 4**, and **Granite**, with **Meson** for builds and **Flatpak** packaging.
+It is not a magic optimizer, and it does not pretend to know better than you. It scans, shows what it found, and asks before cleaning.
 
-> Status: initial release candidate. Before publishing, validate the Flatpak manifest, AppStream metadata, screenshots, and manual test checklist below.
+## Why
 
----
+Desktop cleaners are easy to get wrong. Purrify keeps the scope narrow on purpose:
 
-## What Purrify Does
+- no `sudo`
+- no background daemon
+- no system cleanup
+- no telemetry
+- no network service
+- no automatic deletion
+- no broad `$HOME` permission in the Flatpak manifest
 
-- Scans the thumbnail cache: `~/.cache/thumbnails`
-- Scans the local Trash:
-  - `~/.local/share/Trash/files`
-  - `~/.local/share/Trash/info`
-- Detects Flatpak leftovers in `~/.var/app`
-  - compares local app folders with `flatpak list --app --columns=application`
-- Offers unused Flatpak runtime cleanup:
-  - `flatpak uninstall --unused`
-- Shows an estimated size before cleaning
-- Uses checkboxes so the user chooses exactly what to clean
-- Shows a confirmation dialog with a compact category summary
-- Shows a simple before/after cleanup summary
-- Stores local cleanup history
-- Reports cleanup failures in the app
-- Lets the user choose the scan scope:
-  - caches and Trash
-  - Flatpak
-  - Downloads
-  - duplicate review
-  - developer tools
-- Remembers scan choices locally
-- Leaves duplicates unselected by default
-- Avoids `sudo`, `pkexec`, daemons, remote backends, analytics, and paid APIs
+The app only works with user-space locations that it explicitly scans. So you don't have to worry about accidental data loss or system crashes like other cleaners.
+And Yes, I wrote it because BleachBit messes with my system too... AGAIN (i know your pain).
+We have a safe alternative.
 
----
+## Support the Project 🐾
 
-## What Purrify Does Not Do
+If Purrify made your Linux life a little less cursed, you can **[Feed the Cat](https://donate.stripe.com/cNicN42EFbHy54Y0P1frW00)**.
 
-- It does not clean system files.
-- It does not request administrative privileges.
-- It does not clean `/var`, global `/tmp`, system logs, APT packages, or kernels.
-- It does not run scheduled or automatic cleanup.
-- It does not use X11-specific APIs.
-- It does not run in the background.
-- It does not send telemetry.
+Stars on [GitHub](https://github.com/alessandro-mattos/purrify) also help. Cats like attention. Developers pretend they don't, but they do.
 
-These limits are intentional. Purrify is designed to be boring where it matters: safe, local, reviewable, and easy to explain.
+## What It Can Review
 
----
+- thumbnail cache
+- local Trash
+- Flatpak leftovers in `~/.var/app`
+- installed Flatpak app caches
+- unused Flatpak runtimes
+- duplicate files in Downloads, matched by content hash
+- empty folders and broken shortcuts in common user folders
+- pip, npm, and Yarn caches
+- per-app crash reports
 
-## Stack
+## Build
 
-```txt
-Language: Vala
-UI: GTK 4 + Granite
-Build system: Meson
-Packaging: Flatpak
-Target: elementary OS 7.1+
-Display compatibility: Wayland-first, X11 fallback
-```
-
----
-
-## Project Structure
-
-```txt
-purrify/
-├── data/
-│   ├── io.github.alessandro_mattos.Purrify.desktop.in
-│   ├── io.github.alessandro_mattos.Purrify.metainfo.xml.in
-│   └── icons/hicolor/scalable/apps/io.github.alessandro_mattos.Purrify.svg
-├── flatpak/
-│   └── io.github.alessandro_mattos.Purrify.yml
-├── src/
-│   ├── Application.vala
-│   ├── MainWindow.vala
-│   ├── Scanner.vala
-│   ├── Cleaner.vala
-│   ├── CleaningTarget.vala
-│   ├── FileUtils.vala
-│   ├── Preferences.vala
-│   └── Stats.vala
-├── po/
-│   ├── LINGUAS
-│   ├── POTFILES
-│   └── *.po
-├── scripts/
-│   └── dev-run.sh
-├── Styles/
-│   └── FullLogo.png
-├── meson.build
-├── LICENSE
-└── README.md
-```
-
----
-
-## Local Development
-
-On elementary OS or Ubuntu-like systems, install the development dependencies:
+Install the local development dependencies on elementary OS or Ubuntu-like systems:
 
 ```bash
 sudo apt update
 sudo apt install valac meson ninja-build libgtk-4-dev libgranite-7-dev libgee-0.8-dev
 ```
 
-Package names can vary slightly between distro versions.
-
-Build and run locally:
+Build and run:
 
 ```bash
 meson setup build --prefix=/usr/local
@@ -120,131 +59,35 @@ meson compile -C build
 ./build/src/purrify
 ```
 
-Or use the helper script:
+Or use:
 
 ```bash
 ./scripts/dev-run.sh
 ```
 
----
+## Flatpak
 
-## Flatpak Build
-
-The Flatpak manifest lives at:
+The manifest is at:
 
 ```txt
 flatpak/io.github.alessandro_mattos.Purrify.yml
 ```
 
-Build and run locally:
+Build and install locally:
 
 ```bash
 flatpak-builder --user --install --force-clean build-dir flatpak/io.github.alessandro_mattos.Purrify.yml
 flatpak run io.github.alessandro_mattos.Purrify
 ```
 
-The manifest currently targets:
+Purrify targets `io.elementary.Platform//8` and `io.elementary.Sdk//8`.
 
-```yaml
-runtime: io.elementary.Platform
-runtime-version: '8'
-sdk: io.elementary.Sdk
-```
+## Note
 
----
+Purrify is elementary-first, but not elementary-only. It uses GTK 4, Granite, standard symbolic icons, and a Wayland-first Flatpak setup with X11 fallback.
 
-## Wayland and X11
 
-Purrify uses regular GTK APIs and avoids compositor-specific behavior:
-
-- no `Xlib`
-- no `xrandr`
-- no screen capture
-- no global shortcuts
-- no external overlays
-- no direct window-manager manipulation
-
-The Flatpak manifest uses:
-
-```yaml
-finish-args:
-  - --socket=wayland
-  - --socket=fallback-x11
-  - --share=ipc
-```
-
-Wayland is the primary path, with X11 available as a compatibility fallback.
-
----
-
-## Safety Model
-
-Purrify only works in user-space locations and keeps destructive work behind a confirmation dialog.
-
-The cleanup model has three layers:
-
-1. **Safe by default**
-   - thumbnail cache
-   - local Trash
-   - clearly orphaned Flatpak folders
-
-2. **Review first**
-   - Downloads cleanup
-   - duplicate files
-   - app caches
-   - developer tool caches
-
-3. **Explicit host command**
-   - unused Flatpak runtimes via `flatpak uninstall --unused`
-   - still selected and confirmed through the same cleanup flow
-
-Important constraints:
-
-- no deletion without a scan result
-- no deletion without user confirmation
-- no broad `$HOME` cleanup
-- no `--filesystem=home` permission
-- no network access
-- no telemetry
-- no elevated privileges
-
----
-
-## Publishing Checklist
-
-- Confirm whether `io.github.alessandro_mattos.Purrify` is the final app ID.
-- Validate Flatpak permissions in `flatpak/io.github.alessandro_mattos.Purrify.yml`.
-- Add real screenshots.
-- Test the confirmation flow on a real session.
-- Validate AppStream metadata with `appstreamcli`.
-- Validate the desktop file with `desktop-file-validate`.
-- Check for name or trademark conflicts.
-- Run manual tests with:
-  - elementary OS 7.1+ on Wayland/Secure Session
-  - elementary OS 7.1+ on X11/Classic Session
-  - a user with few Flatpak apps
-  - a user with many Flatpak apps
-  - a user without `~/.var/app`
-  - large Downloads folders
-  - duplicate files with identical content
-  - duplicate names with different content
-
----
-
-## Roadmap Ideas
-
-- A clearer before/after view
-- Group Flatpak leftovers by app
-- Open-folder review before deletion
-- Explicit dry-run mode
-- Visual freed-space meter
-- Friendly risk labels such as "Safe", "Review", and "Manual"
-- Toast or banner feedback after cleanup
-- Human review for the included gettext catalogs: en-US, es, pt-BR, de, fr, and ru
-
----
 
 ## License
 
-MIT.
-# Purrify
+GPL-3.0-or-later. See [LICENSE](LICENSE).
