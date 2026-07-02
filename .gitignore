@@ -1,0 +1,8 @@
+build/
+build-dir/
+.flatpak-builder/
+*.flatpak
+*.tar.xz
+*.zip
+ideas.md
+/styles/
