@@ -1,0 +1,28 @@
+id: io.github.alessandro_mattos.Purrify
+runtime: io.elementary.Platform
+runtime-version: '8'
+sdk: io.elementary.Sdk
+command: purrify
+finish-args:
+  # Wayland first. X11 fallback because real users have real setups.
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+
+  # No --filesystem=home. We ask for the folders we actually review.
+  - --filesystem=xdg-cache:create
+  - --filesystem=xdg-data/Trash:create
+  - --filesystem=~/.var/app:create
+  - --filesystem=~/.npm:create
+  - --filesystem=xdg-download:create
+  - --filesystem=xdg-desktop:create
+  - --filesystem=xdg-documents:create
+
+  # Needed for host Flatpak listing and the confirmed unused-runtime cleanup.
+  - --talk-name=org.freedesktop.Flatpak
+modules:
+  - name: purrify
+    buildsystem: meson
+    sources:
+      - type: dir
+        path: ..

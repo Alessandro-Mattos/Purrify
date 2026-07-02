@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Purrify
+Comment=Keep your desktop fresh and tidy
+Exec=purrify
+Icon=io.github.alessandro_mattos.Purrify
+Terminal=false
+Type=Application
+Categories=Utility;GTK;
+Keywords=cleaner;flatpak;cache;trash;disk;space;elementary;
+StartupNotify=true
+X-GNOME-UsesNotifications=false
