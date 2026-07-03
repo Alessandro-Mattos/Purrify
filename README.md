@@ -80,7 +80,7 @@ flatpak-builder --user --install --force-clean build-dir flatpak/io.github.aless
 flatpak run io.github.alessandro_mattos.Purrify
 ```
 
-Purrify targets `io.elementary.Platform//8` and `io.elementary.Sdk//8`.
+Purrify targets `io.elementary.Platform//8.2` and `io.elementary.Sdk//8.2`.
 
 ## Note
 

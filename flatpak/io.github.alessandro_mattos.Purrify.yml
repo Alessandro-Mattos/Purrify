@@ -1,6 +1,6 @@
 id: io.github.alessandro_mattos.Purrify
 runtime: io.elementary.Platform
-runtime-version: '8'
+runtime-version: '8.2'
 sdk: io.elementary.Sdk
 command: purrify
 finish-args:
