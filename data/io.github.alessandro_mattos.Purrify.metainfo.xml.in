@@ -38,7 +38,7 @@
     <category>Utility</category>
   </categories>
   <releases>
-    <release version="0.1.0" date="2026-07-01">
+    <release version="1.0.0" date="2026-07-04">
       <description>
         <p>Initial release with user-space cache, Trash and Flatpak leftover scanning.</p>
       </description>
