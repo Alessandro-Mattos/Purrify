@@ -38,7 +38,7 @@ namespace Purrify {
         private Gtk.Label hero_number_label;
         private Gtk.Label hero_caption_label;
         private Gtk.Label status_label;
-        private Gtk.Label history_label;
+        private Gtk.Label total_freed_label;
         private Gtk.Button scan_button;
         private Gtk.Button clean_button;
         private Gtk.Spinner scan_spinner;
@@ -150,17 +150,17 @@ namespace Purrify {
             status_label.add_css_class ("dim-label");
             root.append (status_label);
 
-            history_label = new Gtk.Label ("");
-            history_label.wrap = true;
-            history_label.halign = Gtk.Align.START;
-            history_label.margin_start = 24;
-            history_label.margin_end = 24;
-            history_label.margin_bottom = 18;
-            history_label.add_css_class ("caption");
-            history_label.add_css_class ("dim-label");
-            root.append (history_label);
+            total_freed_label = new Gtk.Label ("");
+            total_freed_label.wrap = true;
+            total_freed_label.halign = Gtk.Align.START;
+            total_freed_label.margin_start = 24;
+            total_freed_label.margin_end = 24;
+            total_freed_label.margin_bottom = 18;
+            total_freed_label.add_css_class ("caption");
+            total_freed_label.add_css_class ("dim-label");
+            root.append (total_freed_label);
 
-            refresh_history_label ();
+            refresh_total_freed_label ();
         }
 
         private void open_donation_link () {
@@ -802,12 +802,7 @@ namespace Purrify {
 
         private void on_cleanup_finished (CleanupResult result, int failed_commands) {
             int failed_total = result.failed_count + failed_commands;
-            stats.record_cleanup (
-                result.cleaned_bytes,
-                result.cleaned_count,
-                result.cleaned_commands,
-                failed_total
-            );
+            stats.add_freed_bytes (result.cleaned_bytes);
 
             hero_number_label.label = FileUtils.format_bytes (result.cleaned_bytes);
             hero_caption_label.label = result.cleaned_count > 0 || result.cleaned_commands > 0
@@ -840,9 +835,8 @@ namespace Purrify {
                     ).printf (result.cleaned_commands);
                 }
 
-                status_label.label = _("%s. %s freed in total since you installed Purrify.%s If it saved you some hassle, a good rating helps a lot.").printf (
+                status_label.label = _("%s.%s If it saved you some hassle, a good rating helps a lot.").printf (
                     action_summary,
-                    FileUtils.format_bytes (stats.get_total_freed_bytes ()),
                     failure_note
                 );
             } else {
@@ -854,7 +848,7 @@ namespace Purrify {
                 status_label.label += " " + details;
             }
 
-            refresh_history_label ();
+            refresh_total_freed_label ();
             scan_targets (false);
         }
 
@@ -887,36 +881,12 @@ namespace Purrify {
             return details;
         }
 
-        private void refresh_history_label () {
-            var history = stats.get_recent_history (3);
+        private void refresh_total_freed_label () {
+            uint64 total = stats.get_total_freed_bytes ();
 
-            if (history.size == 0) {
-                history_label.label = _("No cleanup history yet.");
-                return;
-            }
-
-            string text = _("Recent cleanups: ");
-            int index = 0;
-
-            foreach (var entry in history) {
-                string part = _("%s freed on %s").printf (
-                    FileUtils.format_bytes (entry.bytes),
-                    entry.timestamp
-                );
-
-                if (entry.failures > 0) {
-                    part += " " + ngettext (
-                        "(%d failure)",
-                        "(%d failures)",
-                        entry.failures
-                    ).printf (entry.failures);
-                }
-
-                text += index == 0 ? part : " · " + part;
-                index++;
-            }
-
-            history_label.label = text;
+            total_freed_label.label = total == 0
+                ? _("Nothing cleaned yet.")
+                : _("%s freed since you installed Purrify.").printf (FileUtils.format_bytes (total));
         }
     }
 }
