@@ -5,7 +5,9 @@
   <summary>Keep your desktop fresh and tidy</summary>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
-  <developer_name>Alessandro Mattos</developer_name>
+  <developer id="io.github.alessandro_mattos">
+    <name>Alessandro Mattos</name>
+  </developer>
   <description>
     <p>
       Purrify is a small, careful cleaner for elementary OS. It helps you review and remove unused files, Flatpak leftovers, thumbnails, and Trash with a light touch. Nothing is deleted without your approval.
@@ -14,6 +16,22 @@
       It stays local, avoids telemetry, and uses regular GTK APIs so it works on Wayland with an X11 fallback.
     </p>
   </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/Alessandro-Mattos/Purrify/main/screenshots/01.png</image>
+      <caption>Ready to scan</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/Alessandro-Mattos/Purrify/main/screenshots/02.png</image>
+      <caption>Reviewing what can be cleaned, grouped by category</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/Alessandro-Mattos/Purrify/main/screenshots/03.png</image>
+      <caption>Nothing is removed without an explicit confirmation</caption>
+    </screenshot>
+  </screenshots>
+  <url type="homepage">https://github.com/Alessandro-Mattos/Purrify</url>
+  <url type="bugtracker">https://github.com/Alessandro-Mattos/Purrify/issues</url>
   <url type="donation">https://donate.stripe.com/cNicN42EFbHy54Y0P1frW00</url>
   <launchable type="desktop-id">io.github.alessandro_mattos.Purrify.desktop</launchable>
   <categories>
