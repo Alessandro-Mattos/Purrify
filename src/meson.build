@@ -10,8 +10,10 @@ executable(
     'Scanner.vala',
     'Cleaner.vala',
     'CleaningTarget.vala',
+    'GroupSelectionBatch.vala',
     'FileUtils.vala',
     'Preferences.vala',
+    'ScanOptionGroups.vala',
     'Stats.vala'
   ],
   dependencies: [gtk_dep, granite_dep, gee_dep],

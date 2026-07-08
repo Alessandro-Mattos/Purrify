@@ -17,9 +17,6 @@ finish-args:
   - --filesystem=xdg-download:create
   - --filesystem=xdg-desktop:create
   - --filesystem=xdg-documents:create
-
-  # Needed for host Flatpak listing and the confirmed unused-runtime cleanup.
-  - --talk-name=org.freedesktop.Flatpak
 modules:
   - name: purrify
     buildsystem: meson

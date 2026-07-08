@@ -5,11 +5,9 @@
 
 namespace Purrify {
     public class ScanOptions : Object {
-        public bool include_core { get; set; default = true; }
-        public bool include_flatpak { get; set; default = true; }
-        public bool include_downloads { get; set; default = true; }
+        public bool include_apps_cache { get; set; default = true; }
+        public bool include_folders { get; set; default = true; }
         public bool include_duplicates { get; set; default = false; }
-        public bool include_developer_tools { get; set; default = false; }
     }
 
     public class Preferences : Object {
@@ -27,11 +25,25 @@ namespace Purrify {
 
             try {
                 key_file.load_from_file (preferences_path, KeyFileFlags.NONE);
-                options.include_core = get_bool (key_file, "scan", "include_core", true);
-                options.include_flatpak = get_bool (key_file, "scan", "include_flatpak", true);
-                options.include_downloads = get_bool (key_file, "scan", "include_downloads", true);
-                options.include_duplicates = get_bool (key_file, "scan", "include_duplicates", false);
-                options.include_developer_tools = get_bool (key_file, "scan", "include_developer_tools", false);
+
+                if (has_key (key_file, "scan", "include_apps_cache")
+                    || has_key (key_file, "scan", "include_folders")) {
+                    options.include_apps_cache = get_bool (key_file, "scan", "include_apps_cache", true);
+                    options.include_folders = get_bool (key_file, "scan", "include_folders", true);
+                    options.include_duplicates = get_bool (key_file, "scan", "include_duplicates", false);
+
+                    if (!options.include_folders) {
+                        options.include_duplicates = false;
+                    }
+                } else {
+                    options = ScanOptionGroups.from_legacy (
+                        get_bool (key_file, "scan", "include_core", true),
+                        get_bool (key_file, "scan", "include_flatpak", true),
+                        get_bool (key_file, "scan", "include_downloads", true),
+                        get_bool (key_file, "scan", "include_duplicates", false),
+                        get_bool (key_file, "scan", "include_developer_tools", false)
+                    );
+                }
             } catch (Error error) {
                 // First launch should be useful, not adventurous.
             }
@@ -41,11 +53,9 @@ namespace Purrify {
 
         public void save_scan_options (ScanOptions options) {
             var key_file = new KeyFile ();
-            key_file.set_boolean ("scan", "include_core", options.include_core);
-            key_file.set_boolean ("scan", "include_flatpak", options.include_flatpak);
-            key_file.set_boolean ("scan", "include_downloads", options.include_downloads);
+            key_file.set_boolean ("scan", "include_apps_cache", options.include_apps_cache);
+            key_file.set_boolean ("scan", "include_folders", options.include_folders);
             key_file.set_boolean ("scan", "include_duplicates", options.include_duplicates);
-            key_file.set_boolean ("scan", "include_developer_tools", options.include_developer_tools);
 
             try {
                 key_file.save_to_file (preferences_path);
@@ -58,6 +68,14 @@ namespace Purrify {
                 return key_file.get_boolean (group, key);
             } catch (Error error) {
                 return fallback;
+            }
+        }
+
+        private bool has_key (KeyFile key_file, string group, string key) {
+            try {
+                return key_file.has_key (group, key);
+            } catch (Error error) {
+                return false;
             }
         }
     }

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Purrify
-Comment=Keep your desktop fresh and tidy
+Comment=Review cleanup targets before deleting them
 Exec=purrify
 Icon=io.github.alessandro_mattos.Purrify
 Terminal=false

@@ -4,9 +4,9 @@
 
 **Yes, the kitten cleaner.**
 
-Purrify is a beautiful cleanup app for elementary OS. It helps you to keep your desktop clean and tidy , removing thumbnail caches, Trash, Flatpak leftovers, duplicate downloads, empty folders, and a few developer caches.
+Purrify is a cleanup and maintenance app made for elementary OS. It reviews app caches, Trash, duplicate files, empty folders, broken shortcuts, and a few developer caches, then lets you decide what actually gets removed.
 
-It is not a magic optimizer, and it does not pretend to know better than you. It scans, shows what it found, and asks before cleaning.
+It is not a magic optimizer, and it does not pretend to know better than you. Nothing runs as root. Nothing is cleaned in the background. It scans, shows the list, and waits for you.
 
 ## Why
 
@@ -19,10 +19,11 @@ Desktop cleaners are easy to get wrong. Purrify keeps the scope narrow on purpos
 - no network service
 - no automatic deletion
 - no broad `$HOME` permission in the Flatpak manifest
+- no host command permission from the Flatpak sandbox
 
-The app only works with user-space locations that it explicitly scans. So you don't have to worry about accidental data loss or system crashes like other cleaners.
-And Yes, I wrote it because BleachBit messes with my system too... AGAIN (i know your pain).
-We have a safe alternative.
+The app only works with user-space locations that it explicitly scans, so it stays boring in the places where cleaners should be boring.
+
+I started it after one too many "cleanup tools" made my system worse. Purrify is the version I wanted: useful, cautious, and easy to audit.
 
 ## Support the Project 🐾
 
@@ -32,15 +33,9 @@ Stars on [GitHub](https://github.com/alessandro-mattos/purrify) also help. Cats 
 
 ## What It Can Review
 
-- thumbnail cache
-- local Trash
-- Flatpak leftovers in `~/.var/app`
-- installed Flatpak app caches
-- unused Flatpak runtimes
-- duplicate files in Downloads, matched by content hash
-- empty folders and broken shortcuts in common user folders
-- pip, npm, and Yarn caches
-- per-app crash reports
+- Apps & Cache: thumbnails, per-app crash reports, Flatpak app caches in `~/.var/app/*/cache`, and pip, npm, and Yarn caches
+- Folders: local Trash, empty folders, and broken shortcuts in common user folders
+- Duplicate files: duplicate files in Downloads, matched by content hash and left unselected for review by default
 
 ## Build
 

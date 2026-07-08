@@ -22,6 +22,7 @@ namespace Purrify {
             public Gtk.CheckButton master_check;
             public Gtk.Box children_box;
             public bool suppress_master_toggle = false;
+            public bool suppress_child_toggle = false;
         }
 
         private Scanner scanner;
@@ -42,13 +43,10 @@ namespace Purrify {
         private Gtk.Button scan_button;
         private Gtk.Button clean_button;
         private Gtk.Spinner scan_spinner;
-        private Gtk.CheckButton core_check;
-        private Gtk.CheckButton flatpak_check;
-        private Gtk.CheckButton downloads_check;
+        private Gtk.CheckButton apps_cache_check;
+        private Gtk.CheckButton folders_check;
         private Gtk.CheckButton duplicates_check;
-        private Gtk.CheckButton developer_tools_check;
         private uint64 last_clean_estimated_bytes = 0;
-        private int last_clean_selected_count = 0;
 
         public MainWindow (Gtk.Application app) {
             Object (
@@ -76,7 +74,7 @@ namespace Purrify {
             var title_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             var title = new Gtk.Label ("Purrify");
             title.add_css_class ("title");
-            var subtitle = new Gtk.Label (_("A calm, safe cleaner"));
+            var subtitle = new Gtk.Label (_("Review files before cleaning"));
             subtitle.add_css_class ("subtitle");
             title_box.append (title);
             title_box.append (subtitle);
@@ -86,7 +84,7 @@ namespace Purrify {
             scan_spinner.visible = false;
             header.pack_end (scan_spinner);
 
-            var donation_button = new Gtk.Button.with_label (_("🐾 Feed the Cat"));
+            var donation_button = new Gtk.Button.with_label (_("Support"));
             donation_button.tooltip_text = _("Support Purrify");
             donation_button.add_css_class ("flat");
             donation_button.clicked.connect (() => open_donation_link ());
@@ -120,7 +118,7 @@ namespace Purrify {
             hero_number_label.add_css_class (Granite.STYLE_CLASS_ACCENT);
             intro.append (hero_number_label);
 
-            hero_caption_label = new Gtk.Label (_("Click Scan to look for safe things to clean."));
+            hero_caption_label = new Gtk.Label (_("Scan to review files before removing them."));
             hero_caption_label.halign = Gtk.Align.START;
             hero_caption_label.wrap = true;
             hero_caption_label.add_css_class ("dim-label");
@@ -181,51 +179,36 @@ namespace Purrify {
             var checks = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
             checks.hexpand = true;
 
-            core_check = new Gtk.CheckButton.with_label (_("Caches & Trash"));
-            core_check.active = scan_options.include_core;
-            core_check.toggled.connect (() => {
-                scan_options.include_core = core_check.active;
+            apps_cache_check = new Gtk.CheckButton.with_label (_("Apps & Cache"));
+            apps_cache_check.active = scan_options.include_apps_cache;
+            apps_cache_check.toggled.connect (() => {
+                ScanOptionGroups.set_apps_cache_enabled (scan_options, apps_cache_check.active);
                 save_scan_options ();
             });
-            checks.append (core_check);
+            checks.append (apps_cache_check);
 
-            flatpak_check = new Gtk.CheckButton.with_label (_("Flatpak"));
-            flatpak_check.active = scan_options.include_flatpak;
-            flatpak_check.toggled.connect (() => {
-                scan_options.include_flatpak = flatpak_check.active;
+            folders_check = new Gtk.CheckButton.with_label (_("Folders"));
+            folders_check.active = scan_options.include_folders;
+            folders_check.toggled.connect (() => {
+                ScanOptionGroups.set_folders_enabled (scan_options, folders_check.active);
+                duplicates_check.active = scan_options.include_duplicates;
+                duplicates_check.sensitive = ScanOptionGroups.duplicate_review_sensitive (scan_options);
                 save_scan_options ();
             });
-            checks.append (flatpak_check);
+            checks.append (folders_check);
 
-            downloads_check = new Gtk.CheckButton.with_label (_("Downloads"));
-            downloads_check.active = scan_options.include_downloads;
-            downloads_check.toggled.connect (() => {
-                scan_options.include_downloads = downloads_check.active;
-                duplicates_check.sensitive = downloads_check.active;
-                save_scan_options ();
-            });
-            checks.append (downloads_check);
-
-            duplicates_check = new Gtk.CheckButton.with_label (_("Duplicate review (slower)"));
+            duplicates_check = new Gtk.CheckButton.with_label (_("Duplicate files"));
             duplicates_check.active = scan_options.include_duplicates;
-            duplicates_check.sensitive = scan_options.include_downloads;
+            duplicates_check.sensitive = ScanOptionGroups.duplicate_review_sensitive (scan_options);
             duplicates_check.toggled.connect (() => {
                 scan_options.include_duplicates = duplicates_check.active;
                 save_scan_options ();
             });
             checks.append (duplicates_check);
 
-            developer_tools_check = new Gtk.CheckButton.with_label (_("Developer tools"));
-            developer_tools_check.active = scan_options.include_developer_tools;
-            developer_tools_check.toggled.connect (() => {
-                scan_options.include_developer_tools = developer_tools_check.active;
-                save_scan_options ();
-            });
-            checks.append (developer_tools_check);
-
             box.append (checks);
 
-            var hint = new Gtk.Label (_("Downloads and duplicate review can take longer on large folders. Your scan choices are remembered locally."));
+            var hint = new Gtk.Label (_("Scanning duplicate files can take longer on large folders."));
             hint.halign = Gtk.Align.START;
             hint.wrap = true;
             hint.add_css_class ("caption");
@@ -257,7 +240,7 @@ namespace Purrify {
 
             if (announce) {
                 update_summary ();
-                hero_caption_label.label = _("Looking for safe things to clean…");
+                hero_caption_label.label = _("Scanning for items to review…");
                 status_label.label = "";
             }
 
@@ -318,17 +301,15 @@ namespace Purrify {
         }
 
         private void set_scan_option_controls_sensitive (bool sensitive) {
-            core_check.sensitive = sensitive;
-            flatpak_check.sensitive = sensitive;
-            downloads_check.sensitive = sensitive;
-            duplicates_check.sensitive = sensitive && scan_options.include_downloads;
-            developer_tools_check.sensitive = sensitive;
+            apps_cache_check.sensitive = sensitive;
+            folders_check.sensitive = sensitive;
+            duplicates_check.sensitive = sensitive && ScanOptionGroups.duplicate_review_sensitive (scan_options);
         }
 
         private void show_empty_state () {
             hero_number_label.label = _("All clean");
-            hero_caption_label.label = _("Nothing safe to clean was found with the current scan options.");
-            status_label.label = _("Try enabling Downloads, duplicate review, or Developer tools if you want a broader review.");
+            hero_caption_label.label = _("No items were found for the current scan options.");
+            status_label.label = _("Try enabling Apps & Cache, Folders, or Duplicate files.");
         }
 
         private void handle_found_target (CleaningTarget target) {
@@ -457,12 +438,22 @@ namespace Purrify {
                 bool new_state = master_check.active;
                 master_check.inconsistent = false;
 
-                for (int i = 0; i < group.members.size; i++) {
-                    group.members[i].selected = new_state;
-                    group.child_checks[i].active = new_state;
-                }
-
-                update_summary ();
+                GroupSelectionBatch.apply_master_toggle (
+                    group.members,
+                    new_state,
+                    (batching) => {
+                        group.suppress_child_toggle = batching;
+                    },
+                    (i, state) => {
+                        group.child_checks[i].active = state;
+                    },
+                    () => {
+                        refresh_master_state (group);
+                    },
+                    () => {
+                        update_summary ();
+                    }
+                );
             });
 
             refresh_master_state (group);
@@ -523,6 +514,14 @@ namespace Purrify {
             group.suppress_master_toggle = false;
         }
 
+        private LiveGroup? find_group_for_target (CleaningTarget target) {
+            if (target.category == "" || !live_groups.has_key (target.category)) {
+                return null;
+            }
+
+            return live_groups.get (target.category);
+        }
+
         private void reveal_new_row (Gtk.Widget row) {
             var list_row = row as Gtk.ListBoxRow;
             var revealer = list_row != null ? list_row.get_child () as Gtk.Revealer : null;
@@ -553,11 +552,17 @@ namespace Purrify {
             check.sensitive = target.can_clean;
             check.toggled.connect (() => {
                 target.selected = check.active;
-                update_summary ();
 
                 if (on_toggle != null) {
+                    var group = find_group_for_target (target);
+                    if (group != null && group.suppress_child_toggle) {
+                        return;
+                    }
+
                     on_toggle ();
                 }
+
+                update_summary ();
             });
             wrapper.append (check);
 
@@ -569,7 +574,7 @@ namespace Purrify {
 
             var labels = new Gtk.Box (Gtk.Orientation.VERTICAL, 4);
             labels.hexpand = true;
-            labels.tooltip_text = target.kind == CleaningKind.COMMAND_ONLY ? target.command : target.path;
+            labels.tooltip_text = target.path;
 
             var title = new Gtk.Label (target.title);
             title.halign = Gtk.Align.START;
@@ -584,7 +589,7 @@ namespace Purrify {
 
             wrapper.append (labels);
 
-            if (target.kind == CleaningKind.REMOVE_PATH && target.size_bytes > 0) {
+            if (target.size_bytes > 0) {
                 var size = new Gtk.Label (FileUtils.format_bytes (target.size_bytes));
                 size.valign = Gtk.Align.CENTER;
                 size.add_css_class ("numeric");
@@ -619,10 +624,7 @@ namespace Purrify {
                     continue;
                 }
 
-                if (target.kind == CleaningKind.REMOVE_PATH) {
-                    total += target.size_bytes;
-                }
-
+                total += target.size_bytes;
                 selected_count++;
             }
 
@@ -662,30 +664,16 @@ namespace Purrify {
             }
 
             uint64 total_bytes = 0;
-            int command_count = 0;
 
             foreach (var target in selected) {
-                if (target.kind == CleaningKind.REMOVE_PATH) {
-                    total_bytes += target.size_bytes;
-                } else {
-                    command_count++;
-                }
+                total_bytes += target.size_bytes;
             }
 
             last_clean_estimated_bytes = total_bytes;
-            last_clean_selected_count = selected.size;
 
-            string secondary_text = command_count > 0
-                ? ngettext (
-                    "This will permanently remove about %s and run %d command on your system. This cannot be undone.",
-                    "This will permanently remove about %s and run %d commands on your system. This cannot be undone.",
-                    command_count
-                ).printf (
-                    FileUtils.format_bytes (total_bytes), command_count
-                )
-                : _("This will permanently remove about %s. This cannot be undone.").printf (
-                    FileUtils.format_bytes (total_bytes)
-                );
+            string secondary_text = _("This will permanently remove about %s. This cannot be undone.").printf (
+                FileUtils.format_bytes (total_bytes)
+            );
             secondary_text += "\n\n" + build_selected_category_summary (selected);
 
             var dialog = new Granite.MessageDialog.with_image_from_icon_name (
@@ -762,37 +750,13 @@ namespace Purrify {
             set_scan_option_controls_sensitive (false);
             hero_caption_label.label = _("Cleaning selected items…");
 
-            var paths = new ArrayList<CleaningTarget> ();
-            var commands = new ArrayList<CleaningTarget> ();
-
-            foreach (var target in selected) {
-                if (target.kind == CleaningKind.REMOVE_PATH) {
-                    paths.add (target);
-                } else {
-                    commands.add (target);
-                }
-            }
-
             // Big deletes can freeze the main loop and make the desktop accuse us of
             // crimes. Do the work off-thread; bring back only the receipt.
             new Thread<void*> ("purrify-cleaner", () => {
-                var result = cleaner.clean (paths);
-                int failed_commands = 0;
-
-                foreach (var target in commands) {
-                    var command_result = cleaner.run_command (target);
-
-                    if (!command_result.success) {
-                        failed_commands++;
-                        result.failure_messages.add (_("%s: %s").printf (target.title, command_result.error_message));
-                        stderr.printf (_("Failed to run %s: %s\n"), target.command, command_result.error_message);
-                    } else {
-                        result.cleaned_commands++;
-                    }
-                }
+                var result = cleaner.clean (selected);
 
                 Idle.add (() => {
-                    on_cleanup_finished (result, failed_commands);
+                    on_cleanup_finished (result);
                     return false;
                 });
 
@@ -800,12 +764,12 @@ namespace Purrify {
             });
         }
 
-        private void on_cleanup_finished (CleanupResult result, int failed_commands) {
-            int failed_total = result.failed_count + failed_commands;
+        private void on_cleanup_finished (CleanupResult result) {
+            int failed_total = result.failed_count;
             stats.add_freed_bytes (result.cleaned_bytes);
 
             hero_number_label.label = FileUtils.format_bytes (result.cleaned_bytes);
-            hero_caption_label.label = result.cleaned_count > 0 || result.cleaned_commands > 0
+            hero_caption_label.label = result.cleaned_count > 0
                 ? _("Before: about %s selected. After: %s freed.").printf (
                     FileUtils.format_bytes (last_clean_estimated_bytes),
                     FileUtils.format_bytes (result.cleaned_bytes)
@@ -820,22 +784,14 @@ namespace Purrify {
                 ).printf (failed_total)
                 : "";
 
-            if (result.cleaned_count > 0 || result.cleaned_commands > 0) {
+            if (result.cleaned_count > 0) {
                 string action_summary = ngettext (
                     "%d item cleaned",
                     "%d items cleaned",
                     result.cleaned_count
                 ).printf (result.cleaned_count);
 
-                if (result.cleaned_commands > 0) {
-                    action_summary += "; " + ngettext (
-                        "%d command completed",
-                        "%d commands completed",
-                        result.cleaned_commands
-                    ).printf (result.cleaned_commands);
-                }
-
-                status_label.label = _("%s.%s If it saved you some hassle, a good rating helps a lot.").printf (
+                status_label.label = _("%s.%s").printf (
                     action_summary,
                     failure_note
                 );

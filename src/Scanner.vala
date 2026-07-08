@@ -17,7 +17,7 @@ namespace Purrify {
         }
 
         public void scan (ScanOptions options, TargetFoundCallback on_found) {
-            if (options.include_core) {
+            if (options.include_apps_cache) {
                 add_known_path_target (
                     on_found,
                     "thumbnails-cache",
@@ -29,6 +29,12 @@ namespace Purrify {
                     "image-x-generic-symbolic"
                 );
 
+                add_crash_reports (on_found);
+                add_flatpak_app_caches (on_found);
+                add_dev_tool_caches (on_found);
+            }
+
+            if (options.include_folders) {
                 add_known_path_target (
                     on_found,
                     "trash-files",
@@ -51,29 +57,6 @@ namespace Purrify {
                     "user-trash-symbolic"
                 );
 
-                add_crash_reports (on_found);
-            }
-
-            if (options.include_flatpak) {
-                var installed_apps = get_installed_flatpak_app_ids ();
-                add_flatpak_leftovers (on_found, installed_apps);
-                add_installed_flatpak_app_caches (on_found, installed_apps);
-
-                on_found (new CleaningTarget.command_only (
-                    "unused-flatpak-runtimes",
-                    _("Unused Flatpak runtimes"),
-                    _("Runtimes no installed app uses anymore. Safe to remove. Flatpak will download them again if a future app needs them."),
-                    "flatpak",
-                    { "uninstall", "--unused", "-y" },
-                    "package-x-generic-symbolic"
-                ));
-            }
-
-            if (options.include_developer_tools) {
-                add_dev_tool_caches (on_found);
-            }
-
-            if (options.include_downloads) {
                 if (options.include_duplicates) {
                     add_duplicate_downloads (on_found);
                 }
@@ -199,55 +182,8 @@ namespace Purrify {
             }
         }
 
-        private void add_installed_flatpak_app_caches (
-            TargetFoundCallback on_found,
-            HashSet<string>? installed_apps
-        ) {
-            if (installed_apps == null) {
-                return;
-            }
-
+        private void add_flatpak_app_caches (TargetFoundCallback on_found) {
             string flatpak_apps_dir = Path.build_filename (home_dir, ".var", "app");
-
-            foreach (string app_id in installed_apps) {
-                string cache_path = Path.build_filename (flatpak_apps_dir, app_id, "cache");
-
-                if (!FileUtils.path_exists (cache_path)) {
-                    continue;
-                }
-
-                uint64 size = FileUtils.directory_size (cache_path);
-
-                if (size == 0) {
-                    continue;
-                }
-
-                var target = new CleaningTarget.remove_path (
-                    "flatpak-app-cache-" + app_id,
-                    _("App cache: %s").printf (app_id),
-                    _("Cache used by an app you still have installed. The app recreates it as needed."),
-                    cache_path,
-                    size,
-                    true,
-                    "package-x-generic-symbolic"
-                );
-                target.category = _("Flatpak app caches");
-                on_found (target);
-            }
-        }
-
-        private void add_flatpak_leftovers (
-            TargetFoundCallback on_found,
-            HashSet<string>? installed_apps
-        ) {
-            string flatpak_apps_dir = Path.build_filename (home_dir, ".var", "app");
-
-            // If Flatpak will not tell us what is installed, we do not guess. Guessing
-            // here is how you delete someone's real app data and deserve the angry email.
-            if (installed_apps == null) {
-                return;
-            }
-
             var flatpak_dir = File.new_for_path (flatpak_apps_dir);
 
             if (!flatpak_dir.query_exists ()) {
@@ -267,73 +203,33 @@ namespace Purrify {
                     }
 
                     string app_id = info.get_name ();
-                    if (installed_apps.contains (app_id)) {
+                    string cache_path = Path.build_filename (flatpak_apps_dir, app_id, "cache");
+
+                    if (!FileUtils.path_exists (cache_path)) {
                         continue;
                     }
 
-                    string app_path = Path.build_filename (flatpak_apps_dir, app_id);
-                    uint64 size = FileUtils.directory_size (app_path);
+                    uint64 size = FileUtils.directory_size (cache_path);
+
+                    if (size == 0) {
+                        continue;
+                    }
 
                     var target = new CleaningTarget.remove_path (
-                        "flatpak-leftover-" + app_id,
-                        _("Flatpak leftover: %s").printf (app_id),
-                        _("Data left behind by an app that does not appear in the installed Flatpak app list."),
-                        app_path,
+                        "flatpak-app-cache-" + app_id,
+                        _("Flatpak app cache: %s").printf (app_id),
+                        _("Cached data stored inside this Flatpak app sandbox. The app recreates it as needed."),
+                        cache_path,
                         size,
                         true,
                         "package-x-generic-symbolic"
                     );
-                    target.category = _("Flatpak leftovers");
+                    target.category = _("Flatpak app caches");
                     on_found (target);
                 }
             } catch (Error error) {
-                // Leftovers are useful, but not worth killing the whole scan over.
+                // Cache review is helpful, but not worth killing the whole scan over.
             }
-        }
-
-        // null means "could not check", not "nothing is installed". Huge difference.
-        private HashSet<string>? get_installed_flatpak_app_ids () {
-            var ids = new HashSet<string> ();
-            string? stdout;
-            string? stderr;
-            int status;
-
-            try {
-                string[] argv = {
-                    "flatpak",
-                    "list",
-                    "--app",
-                    "--columns=application"
-                };
-
-                argv = FileUtils.wrap_host_command_args (argv);
-
-                Process.spawn_sync (
-                    null,
-                    argv,
-                    null,
-                    SpawnFlags.SEARCH_PATH,
-                    null,
-                    out stdout,
-                    out stderr,
-                    out status
-                );
-
-                if (status != 0 || stdout == null) {
-                    return null;
-                }
-
-                foreach (string raw_line in stdout.split ("\n")) {
-                    string line = raw_line.strip ();
-                    if (line != "") {
-                        ids.add (line);
-                    }
-                }
-            } catch (Error error) {
-                return null;
-            }
-
-            return ids;
         }
 
         // Duplicate names lie. Hashes snitch.

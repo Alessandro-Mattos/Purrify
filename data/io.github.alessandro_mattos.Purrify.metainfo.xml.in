@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>io.github.alessandro_mattos.Purrify</id>
   <name>Purrify</name>
-  <summary>Keep your desktop fresh and tidy</summary>
+  <summary>Review cleanup targets before deleting them</summary>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <developer id="io.github.alessandro_mattos">
@@ -10,10 +10,10 @@
   </developer>
   <description>
     <p>
-      Purrify is a small, careful cleaner for elementary OS. It helps you review and remove unused files, Flatpak leftovers, thumbnails, and Trash with a light touch. Nothing is deleted without your approval.
+      Purrify helps elementary OS users review common cleanup targets before removing anything: app caches, Trash, empty folders, broken shortcuts, and duplicate files.
     </p>
     <p>
-      It stays local, avoids telemetry, and uses regular GTK APIs so it works on Wayland with an X11 fallback.
+      It stays local and uses limited Flatpak permissions. It does not use sudo, a background service, telemetry, or automatic deletion.
     </p>
   </description>
   <screenshots>
@@ -29,6 +29,10 @@
       <image>https://raw.githubusercontent.com/Alessandro-Mattos/Purrify/main/screenshots/03.png</image>
       <caption>Nothing is removed without an explicit confirmation</caption>
     </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/Alessandro-Mattos/Purrify/main/screenshots/04.png</image>
+      <caption>Select only the items you want to clean</caption>
+    </screenshot>
   </screenshots>
   <url type="homepage">https://github.com/Alessandro-Mattos/Purrify</url>
   <url type="bugtracker">https://github.com/Alessandro-Mattos/Purrify/issues</url>
@@ -38,9 +42,16 @@
     <category>Utility</category>
   </categories>
   <releases>
+    <release version="1.0.1" date="2026-07-08">
+      <description>
+        <p>Grouped scan options into Apps &amp; Cache, Folders, and Duplicate files.</p>
+        <p>Removed host Flatpak command access and limited Flatpak cleanup to local app caches.</p>
+        <p>Updated screenshots and kept cleanup manual by default.</p>
+      </description>
+    </release>
     <release version="1.0.0" date="2026-07-04">
       <description>
-        <p>Initial release with user-space cache, Trash and Flatpak leftover scanning.</p>
+        <p>Initial release with user-space cache, Trash, and Flatpak app cache scanning.</p>
       </description>
     </release>
   </releases>

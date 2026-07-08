@@ -1,7 +1,7 @@
 project(
   'purrify',
   ['vala', 'c'],
-  version: '0.1.0',
+  version: '1.0.1',
   license: 'GPL-3.0-or-later',
   meson_version: '>=0.61.0'
 )
@@ -16,3 +16,4 @@ locale_dir = join_paths(get_option('prefix'), get_option('localedir'))
 subdir('src')
 subdir('data')
 subdir('po')
+subdir('tests')

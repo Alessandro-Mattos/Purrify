@@ -85,23 +85,6 @@ namespace Purrify {
             }
         }
 
-        public static bool running_in_flatpak_sandbox () {
-            return path_exists ("/.flatpak-info");
-        }
-
-        public static string[] wrap_host_command_args (string[] args) {
-            if (!running_in_flatpak_sandbox ()) {
-                return args;
-            }
-
-            string[] wrapped = { "flatpak-spawn", "--host" };
-            foreach (string arg in args) {
-                wrapped += arg;
-            }
-
-            return wrapped;
-        }
-
         public static string format_bytes (uint64 bytes) {
             double value = (double) bytes;
             string[] units = { "B", "KB", "MB", "GB", "TB" };

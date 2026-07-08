@@ -9,18 +9,12 @@ namespace Purrify {
     public class CleanupResult : Object {
         public int cleaned_count { get; set; default = 0; }
         public int failed_count { get; set; default = 0; }
-        public int cleaned_commands { get; set; default = 0; }
         public uint64 cleaned_bytes { get; set; default = 0; }
         public ArrayList<string> failure_messages { get; private set; }
 
         public CleanupResult () {
             failure_messages = new ArrayList<string> ();
         }
-    }
-
-    public class CommandResult : Object {
-        public bool success { get; set; default = false; }
-        public string error_message { get; set; default = ""; }
     }
 
     public class Cleaner : Object {
@@ -82,7 +76,7 @@ namespace Purrify {
             }
 
             string flatpak_apps_dir = Path.build_filename (home_dir, ".var", "app");
-            if (is_descendant_of (normalized, flatpak_apps_dir)) {
+            if (is_flatpak_cache_path (normalized, flatpak_apps_dir)) {
                 return true;
             }
 
@@ -135,61 +129,15 @@ namespace Purrify {
             return path.has_suffix (suffix) || path.index_of (suffix + Path.DIR_SEPARATOR_S) >= 0;
         }
 
-        // Host command, allowlisted and confirmed. No sneaky "just one little command".
-        public CommandResult run_command (CleaningTarget target) {
-            var result = new CommandResult ();
-            string? command_stdout;
-            string? command_stderr;
-            int status;
-
-            try {
-                if (!is_allowed_command (target)) {
-                    result.success = false;
-                    result.error_message = _("Command is not in Purrify's allowed command list.");
-                    return result;
-                }
-
-                string[] argv = { target.command_program };
-                foreach (string arg in target.command_args) {
-                    argv += arg;
-                }
-
-                argv = FileUtils.wrap_host_command_args (argv);
-
-                Process.spawn_sync (
-                    null,
-                    argv,
-                    null,
-                    SpawnFlags.SEARCH_PATH,
-                    null,
-                    out command_stdout,
-                    out command_stderr,
-                    out status
-                );
-
-                result.success = status == 0;
-
-                if (!result.success) {
-                    result.error_message = (command_stderr != null && command_stderr.strip () != "")
-                        ? command_stderr.strip ()
-                        : _("The command exited with an error.");
-                }
-            } catch (Error error) {
-                result.success = false;
-                result.error_message = error.message;
-            }
-
-            return result;
-        }
-
-        private bool is_allowed_command (CleaningTarget target) {
-            if (target.command_program != "flatpak" || target.command_args.length != 3) {
+        private bool is_flatpak_cache_path (string path, string flatpak_apps_dir) {
+            string root = flatpak_apps_dir + Path.DIR_SEPARATOR_S;
+            if (!path.has_prefix (root)) {
                 return false;
             }
 
-            return target.command_args[0] == "uninstall"
-                && target.command_args[1] == "--unused"
-                && target.command_args[2] == "-y";
+            string relative = path.substring (root.length);
+            string[] parts = relative.split (Path.DIR_SEPARATOR_S);
+            return parts.length >= 2 && parts[0] != "" && parts[1] == "cache";
         }
     }
 }
