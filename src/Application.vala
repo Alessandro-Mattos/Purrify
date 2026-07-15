@@ -10,7 +10,7 @@ namespace Purrify {
     public class Application : Gtk.Application {
         public Application () {
             Object (
-                application_id: "io.github.alessandro_mattos.Purrify",
+                application_id: "io.github.alessandro_mattos.purrify",
                 flags: ApplicationFlags.FLAGS_NONE
             );
         }

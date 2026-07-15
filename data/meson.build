@@ -1,4 +1,4 @@
-app_id = 'io.github.alessandro_mattos.Purrify'
+app_id = 'io.github.alessandro_mattos.purrify'
 
 i18n.merge_file(
   input: app_id + '.desktop.in',

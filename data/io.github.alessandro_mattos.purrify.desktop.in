@@ -2,7 +2,7 @@
 Name=Purrify
 Comment=Review cleanup targets before deleting them
 Exec=purrify
-Icon=io.github.alessandro_mattos.Purrify
+Icon=io.github.alessandro_mattos.purrify
 Terminal=false
 Type=Application
 Categories=Utility;GTK;

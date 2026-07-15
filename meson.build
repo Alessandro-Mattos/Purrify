@@ -9,7 +9,7 @@ project(
 i18n = import('i18n')
 gnome = import('gnome')
 
-app_id = 'io.github.alessandro_mattos.Purrify'
+app_id = 'io.github.alessandro_mattos.purrify'
 gettext_package = 'purrify'
 locale_dir = join_paths(get_option('prefix'), get_option('localedir'))
 

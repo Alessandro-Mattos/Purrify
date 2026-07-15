@@ -1,4 +1,4 @@
-id: io.github.alessandro_mattos.Purrify
+id: io.github.alessandro_mattos.purrify
 runtime: io.elementary.Platform
 runtime-version: '8.2'
 sdk: io.elementary.Sdk

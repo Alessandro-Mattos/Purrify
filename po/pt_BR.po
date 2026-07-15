@@ -455,38 +455,38 @@ msgstr "O comando não está na lista de comandos permitidos pelo Purrify."
 msgid "The command exited with an error."
 msgstr "O comando terminou com erro."
 
-#: data/io.github.alessandro_mattos.Purrify.desktop.in:3
-#: data/io.github.alessandro_mattos.Purrify.metainfo.xml.in:4
+#: data/io.github.alessandro_mattos.purrify.desktop.in:3
+#: data/io.github.alessandro_mattos.purrify.metainfo.xml.in:4
 msgid "Purrify"
 msgstr ""
 
-#: data/io.github.alessandro_mattos.Purrify.desktop.in:4
-#: data/io.github.alessandro_mattos.Purrify.metainfo.xml.in:5
+#: data/io.github.alessandro_mattos.purrify.desktop.in:4
+#: data/io.github.alessandro_mattos.purrify.metainfo.xml.in:5
 msgid "Keep your desktop fresh and tidy"
 msgstr ""
 
-#: data/io.github.alessandro_mattos.Purrify.desktop.in:10
+#: data/io.github.alessandro_mattos.purrify.desktop.in:10
 msgid "cleaner;flatpak;cache;trash;disk;space;elementary;"
 msgstr ""
 
-#: data/io.github.alessandro_mattos.Purrify.metainfo.xml.in:8
+#: data/io.github.alessandro_mattos.purrify.metainfo.xml.in:8
 msgid "Alessandro Mattos"
 msgstr ""
 
-#: data/io.github.alessandro_mattos.Purrify.metainfo.xml.in:10
+#: data/io.github.alessandro_mattos.purrify.metainfo.xml.in:10
 msgid ""
 "Purrify is a small, careful cleaner for elementary OS. It helps you review "
 "and remove unused files, Flatpak leftovers, thumbnails, and Trash with a "
 "light touch. Nothing is deleted without your approval."
 msgstr ""
 
-#: data/io.github.alessandro_mattos.Purrify.metainfo.xml.in:13
+#: data/io.github.alessandro_mattos.purrify.metainfo.xml.in:13
 msgid ""
 "It stays local, avoids telemetry, and uses regular GTK APIs so it works on "
 "Wayland with an X11 fallback."
 msgstr ""
 
-#: data/io.github.alessandro_mattos.Purrify.metainfo.xml.in:25
+#: data/io.github.alessandro_mattos.purrify.metainfo.xml.in:25
 msgid ""
 "Initial release with user-space cache, Trash and Flatpak leftover scanning."
 msgstr ""

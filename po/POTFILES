@@ -6,5 +6,5 @@ src/CleaningTarget.vala
 src/FileUtils.vala
 src/Preferences.vala
 src/Stats.vala
-data/io.github.alessandro_mattos.Purrify.desktop.in
-data/io.github.alessandro_mattos.Purrify.metainfo.xml.in
+data/io.github.alessandro_mattos.purrify.desktop.in
+data/io.github.alessandro_mattos.purrify.metainfo.xml.in
