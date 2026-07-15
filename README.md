@@ -65,13 +65,13 @@ Or use:
 The manifest is at:
 
 ```txt
-flatpak/io.github.alessandro_mattos.purrify.yml
+flatpak/io.github.alessandro_mattos.Purrify.yml
 ```
 
 Build and install locally:
 
 ```bash
-flatpak-builder --user --install --force-clean build-dir flatpak/io.github.alessandro_mattos.purrify.yml
+flatpak-builder --user --install --force-clean build-dir flatpak/io.github.alessandro_mattos.Purrify.yml
 flatpak run io.github.alessandro_mattos.purrify
 ```
 
