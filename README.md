@@ -33,7 +33,7 @@ Stars on [GitHub](https://github.com/alessandro-mattos/purrify) also help. Cats 
 
 ## What It Can Review
 
-- Apps & Cache: thumbnails, per-app crash reports, Flatpak app caches in `~/.var/app/*/cache`, and pip, npm, and Yarn caches
+- Apps & Cache: thumbnails, per-app crash reports, and pip, npm, and Yarn caches
 - Folders: local Trash, empty folders, and broken shortcuts in common user folders
 - Duplicate files: duplicate files in Downloads, matched by content hash and left unselected for review by default
 

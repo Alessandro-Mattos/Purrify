@@ -75,11 +75,6 @@ namespace Purrify {
                 }
             }
 
-            string flatpak_apps_dir = Path.build_filename (home_dir, ".var", "app");
-            if (is_flatpak_cache_path (normalized, flatpak_apps_dir)) {
-                return true;
-            }
-
             string cache_dir = Path.build_filename (home_dir, ".cache");
             if (is_crash_reports_path (normalized, cache_dir)) {
                 return true;
@@ -129,15 +124,5 @@ namespace Purrify {
             return path.has_suffix (suffix) || path.index_of (suffix + Path.DIR_SEPARATOR_S) >= 0;
         }
 
-        private bool is_flatpak_cache_path (string path, string flatpak_apps_dir) {
-            string root = flatpak_apps_dir + Path.DIR_SEPARATOR_S;
-            if (!path.has_prefix (root)) {
-                return false;
-            }
-
-            string relative = path.substring (root.length);
-            string[] parts = relative.split (Path.DIR_SEPARATOR_S);
-            return parts.length >= 2 && parts[0] != "" && parts[1] == "cache";
-        }
     }
 }

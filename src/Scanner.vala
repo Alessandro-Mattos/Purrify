@@ -30,7 +30,6 @@ namespace Purrify {
                 );
 
                 add_crash_reports (on_found);
-                add_flatpak_app_caches (on_found);
                 add_dev_tool_caches (on_found);
             }
 
@@ -179,56 +178,6 @@ namespace Purrify {
                 }
             } catch (Error error) {
                 // Crash reports are a bonus round. If this fails, keep scanning.
-            }
-        }
-
-        private void add_flatpak_app_caches (TargetFoundCallback on_found) {
-            string flatpak_apps_dir = Path.build_filename (home_dir, ".var", "app");
-            var flatpak_dir = File.new_for_path (flatpak_apps_dir);
-
-            if (!flatpak_dir.query_exists ()) {
-                return;
-            }
-
-            try {
-                FileEnumerator enumerator = flatpak_dir.enumerate_children (
-                    "standard::name,standard::type",
-                    FileQueryInfoFlags.NOFOLLOW_SYMLINKS
-                );
-
-                FileInfo? info;
-                while ((info = enumerator.next_file ()) != null) {
-                    if (info.get_file_type () != FileType.DIRECTORY) {
-                        continue;
-                    }
-
-                    string app_id = info.get_name ();
-                    string cache_path = Path.build_filename (flatpak_apps_dir, app_id, "cache");
-
-                    if (!FileUtils.path_exists (cache_path)) {
-                        continue;
-                    }
-
-                    uint64 size = FileUtils.directory_size (cache_path);
-
-                    if (size == 0) {
-                        continue;
-                    }
-
-                    var target = new CleaningTarget.remove_path (
-                        "flatpak-app-cache-" + app_id,
-                        _("Flatpak app cache: %s").printf (app_id),
-                        _("Cached data stored inside this Flatpak app sandbox. The app recreates it as needed."),
-                        cache_path,
-                        size,
-                        true,
-                        "package-x-generic-symbolic"
-                    );
-                    target.category = _("Flatpak app caches");
-                    on_found (target);
-                }
-            } catch (Error error) {
-                // Cache review is helpful, but not worth killing the whole scan over.
             }
         }
 

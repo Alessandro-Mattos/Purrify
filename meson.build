@@ -1,7 +1,7 @@
 project(
   'purrify',
   ['vala', 'c'],
-  version: '1.0.1',
+  version: '1.0.2',
   license: 'GPL-3.0-or-later',
   meson_version: '>=0.61.0'
 )

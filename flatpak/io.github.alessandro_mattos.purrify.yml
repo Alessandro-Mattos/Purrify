@@ -12,7 +12,6 @@ finish-args:
   # No --filesystem=home. We ask for the folders we actually review.
   - --filesystem=xdg-cache:create
   - --filesystem=xdg-data/Trash:create
-  - --filesystem=~/.var/app:create
   - --filesystem=~/.npm:create
   - --filesystem=xdg-download:create
   - --filesystem=xdg-desktop:create
