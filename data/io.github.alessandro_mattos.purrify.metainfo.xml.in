@@ -42,6 +42,11 @@
     <category>Utility</category>
   </categories>
   <releases>
+    <release version="1.0.3" date="2026-07-15">
+      <description>
+        <p>Fixed the Flatpak manifest filename used by AppCenter review builds.</p>
+      </description>
+    </release>
     <release version="1.0.2" date="2026-07-15">
       <description>
         <p>Removed access to other Flatpak applications' private data while preserving user-space and developer cache cleanup.</p>
