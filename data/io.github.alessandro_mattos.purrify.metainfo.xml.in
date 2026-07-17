@@ -42,6 +42,11 @@
     <category>Utility</category>
   </categories>
   <releases>
+    <release version="1.0.5" date="2026-07-16">
+      <description>
+        <p>Normalized the application ID to lowercase across Flatpak packaging assets and AppCenter metadata.</p>
+      </description>
+    </release>
     <release version="1.0.4" date="2026-07-15">
       <description>
         <p>Fixed Flatpak icon asset installation for AppCenter builds.</p>
