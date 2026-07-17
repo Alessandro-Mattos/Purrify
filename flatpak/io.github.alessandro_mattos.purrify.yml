@@ -4,7 +4,7 @@ runtime-version: '8.2'
 sdk: io.elementary.Sdk
 command: purrify
 finish-args:
-  # Wayland first. X11 fallback because real users have real setups.
+  # Prefer Wayland, with X11 fallback for compatible desktop sessions.
   - --socket=wayland
   - --socket=fallback-x11
   - --share=ipc
