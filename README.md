@@ -8,6 +8,20 @@ Purrify is a cleanup and maintenance app made for elementary OS. It reviews app 
 
 It is not a magic optimizer, and it does not pretend to know better than you. Nothing runs as root. Nothing is cleaned in the background. It scans, shows the list, and waits for you.
 
+## Install
+
+Install Purrify from AppCenter on elementary OS:
+
+[![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/io.github.alessandro_mattos.purrify/)
+
+## Screenshots
+
+| Ready to scan | Review cleanup targets |
+|:---:|:---:|
+| ![Purrify ready to scan](screenshots/01.png) | ![Purrify showing cleanup targets grouped by category](screenshots/02.png) |
+| **Confirm before cleaning** | **Choose exactly what to remove** |
+| ![Purrify asking for confirmation before cleaning](screenshots/03.png) | ![Purrify with selected items ready to clean](screenshots/04.png) |
+
 ## Why
 
 Desktop cleaners are easy to get wrong. Purrify keeps the scope narrow on purpose:
