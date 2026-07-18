@@ -14,6 +14,8 @@ Install Purrify from AppCenter on elementary OS:
 
 [![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/io.github.alessandro_mattos.purrify/)
 
+[![Support Purrify on Stripe](https://img.shields.io/badge/Support_Purrify-Feed_the_Cat-635BFF?logo=stripe&logoColor=white)](https://donate.stripe.com/cNicN42EFbHy54Y0P1frW00)
+
 ## Screenshots
 
 | Ready to scan | Review cleanup targets |
